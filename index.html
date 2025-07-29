@@ -1,0 +1,2901 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İmaret Vakfı Çankırı | İMARET EĞİTİM, KÜLTÜR, TANITIM,  YARDIMLAŞMA,  DAYANIŞMA VE KALKINMA VAKFI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        :root {
+            --primary-blue: #3f87c7;
+            --light-blue: #79a0c1;
+            --primary-green: #60af59;
+            --accent-orange: #ff8000;
+            --soft-orange: #ff9933;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --background-light: #f8f9fa;
+            --shadow: rgba(0, 0, 0, 0.15);
+            --shadow-hover: rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            transition: all 0.4s ease;
+            border-bottom: 1px solid rgba(63, 135, 199, 0.1);
+            box-shadow: 0 10px 20px var(--shadow);
+        }
+
+        /* Topbar */
+        .topbar {
+            height: 0;
+            overflow: hidden;
+            background: linear-gradient(to right, var(--primary-blue), var(--primary-green));
+            color: #fff;
+            font-size: 14px;
+            transition: height 0.4s ease, padding 0.4s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            gap: 16px;
+        }
+
+        /* Sol ve sağ bölümler */
+        .topbar-left,
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Güncel Tarih */
+        .current-date {
+            font-weight: 500;
+            letter-spacing: 0.4px;
+            transition: all 0.3s ease;
+        }
+
+        .top-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            padding: 4px 10px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .top-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+        }
+
+        /* Ikon stilleri */
+        .topbar i {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+
+        /* Scroll en üstte ise topbar açılır, navbar büyür, yazılar ve logo büyür */
+        .header.topbar-visible .topbar {
+            height: 40px;
+            padding: 0 20px;
+        }
+
+        .header.topbar-visible .nav-container {
+            height: 100px;
+        }
+
+        .header.topbar-visible .nav-menu {
+            height: 50px;
+        }
+
+        .header.topbar-visible .logo img {
+            height: 80px;
+        }
+
+        .header.topbar-visible .nav-item a {
+            font-size: 19px;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            height: 90px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            transition: height 0.3s ease, padding 0.3s ease;
+        }
+
+        /* Logo container */
+        .logo img {
+            height: 60px;
+            transition: height 0.3s ease;
+        }
+
+        /* Navigasyon Menü */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-radius: 8px;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-blue);
+            background: rgba(63, 135, 199, 0.1);
+        }
+
+        .dropdown-arrow {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item:hover .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Açılır Menü */
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 220px;
+            box-shadow: 0 15px 50px var(--shadow);
+            border-radius: 15px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.4s ease;
+            z-index: 1000;
+            border: 1px solid rgba(63, 135, 199, 0.1);
+            overflow: hidden;
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            background: white;
+            border-radius: 0;
+        }
+
+        .dropdown a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .dropdown a:hover::before {
+            left: 0;
+        }
+
+        .dropdown a:hover {
+            color: white;
+            padding-left: 2rem;
+        }
+
+        /* Oturum Açma */
+        .nav-user {
+            position: relative;
+            display: inline-block;
+            margin-left: 1rem;
+        }
+
+        .user-dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #00b894, #0984e3);
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'Segoe UI', sans-serif;
+            border: none;
+            border-radius: 100px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .user-dropdown-toggle:hover::before {
+            left: 100%;
+        }
+
+        .user-dropdown-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            background: linear-gradient(135deg, #0984e3, #00b894);
+        }
+
+        .user-dropdown-toggle span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .user-dropdown-menu {
+            position: absolute;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: none;
+            min-width: 170px;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .user-dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 18px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+            text-decoration: none;
+            transition: background 0.2s ease;
+        }
+
+        .user-dropdown-menu a:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Kısmı */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-green) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Karartma efekti */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: 1;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        /* Içerik */
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Buton */
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--accent-orange), var(--soft-orange));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 128, 0, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 128, 0, 0.4);
+        }
+
+        /* Sayfa Içeriği */
+        .page-content {
+            min-height: 100vh;
+            padding: 120px 2rem 5rem;
+            background: var(--background-light);
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+            animation: slideInFromTop 0.6s ease-out;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin: 3.5rem 0;
+            color: var(--text-dark);
+            position: relative;
+            opacity: 0;
+            transform: translateY(-30px);
+            animation: fadeInUp 0.8s ease-out 0.2s forwards;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            border-radius: 2px;
+        }
+
+        /* Kart Stili */
+        .content-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 15px 50px var(--shadow);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: cardSlideIn 0.8s ease-out forwards;
+            border: 1px solid rgba(63, 135, 199, 0.1);
+        }
+
+        .content-card:nth-child(2) { animation-delay: 0.3s; }
+        .content-card:nth-child(3) { animation-delay: 0.4s; }
+        .content-card:nth-child(4) { animation-delay: 0.5s; }
+
+        .content-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 70px var(--shadow-hover);
+        }
+
+        /* Bağış Butonu */
+        .donate-btn {
+            position: relative;
+            overflow: hidden;
+            padding: 1rem 2.5rem;
+            font-size: 1.15rem;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-green), var(--accent-orange));
+            background-size: 200% 200%;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            box-shadow: 0 8px 24px rgba(63, 135, 199, 0.18);
+            transition: background-position 0.4s, transform 0.2s, box-shadow 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .donate-btn:hover {
+            background-position: right center;
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 12px 35px rgba(255, 128, 0, 0.25);
+        }
+
+        .donate-btn .fa-heart {
+            animation: pulse 1.2s infinite;
+            color: #fff;
+            font-size: 1.3em;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1);}
+            50% { transform: scale(1.18);}
+            100% { transform: scale(1);}
+        }
+
+        /* Bağış Miktarları */
+        .amount-btn {
+            border: none;
+            outline: none;
+            background: var(--background-light);
+            color: var(--primary-blue);
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.7rem 1.4rem;
+            border-radius: 30px;
+            box-shadow: 0 2px 8px var(--shadow);
+            cursor: pointer;
+            transition:
+                background 0.2s,
+                color 0.2s,
+                transform 0.12s,
+                box-shadow 0.2s;
+            position: relative;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.3px;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .amount-btn:not(.active):hover {
+            background: #eaf3fa;
+            color: var(--primary-green);
+            transform: translateY(-1px) scale(1.03);
+            box-shadow: 0 4px 16px var(--shadow-hover);
+        }
+
+        .amount-btn.active {
+            background: var(--primary-blue);
+            color: #fff;
+            transform: scale(1.06);
+            box-shadow: 0 6px 18px var(--primary-blue);
+            border: 2px solid var(--primary-green);
+        }
+
+        .amount-btn.custom-amount::after {
+            content: "✏️";
+            margin-left: 6px;
+            font-size: 1em;
+            vertical-align: middle;
+            opacity: 0.7;
+        }
+
+        /* Başkan sayfası */
+        .president-card {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .president-photo {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+
+        .president-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 15px;
+        }
+
+        .president-info h3 {
+            color: var(--primary-blue);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .president-title {
+            color: var(--accent-orange);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .president-bio {
+            color: var(--text-light);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .president-bio p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Kurumsal Sayfalar */
+        .corporate-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title-small {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .section-content {
+            color: var(--text-light);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .section-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Liste */
+        .objectives-list, .goals-list {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .objectives-list li, .goals-list li {
+            background: var(--background-light);
+            margin-bottom: 1rem;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-green);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .objectives-list li:hover, .goals-list li:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px var(--shadow);
+        }
+
+        .objectives-list li::before, .goals-list li::before {
+            content: '✓';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-green);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Menü */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-dark);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            z-index: 999;
+            padding: 6rem 2rem 2rem;
+            overflow-y: auto;
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        .mobile-nav-menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .mobile-nav-item {
+            margin-bottom: 1rem;
+        }
+
+        .mobile-nav-item > a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-item > a:hover,
+        .mobile-nav-item > a.active {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            color: white;
+        }
+
+        .mobile-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: var(--background-light);
+            border-radius: 0 0 10px 10px;
+            margin-top: -2px;
+        }
+
+        .mobile-dropdown.active {
+            max-height: 500px;
+        }
+
+        .mobile-dropdown a {
+            display: block;
+            padding: 0.8rem 1.5rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .mobile-dropdown a:hover {
+            background: white;
+            border-left-color: var(--primary-blue);
+            padding-left: 2rem;
+        }
+
+        .content-card fieldset {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 1.5rem;
+            background-color: #fafafa;
+        }
+
+        .content-card legend {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #1a3e5f;
+            margin-bottom: 1rem;
+        }
+
+        .content-card input[type="text"],
+        .content-card input[type="email"],
+        .content-card input[type="file"],
+        .content-card input[type="number"],
+        .content-card textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .content-card textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .file-grid {
+            gap: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        }
+
+        .file-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .file-group label {
+            padding-bottom: 1rem;
+        }
+
+        .checkboxes label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+
+
+        /* Haberler Sayfası */
+        .news-section {
+            background: #f8f9fa;
+            padding: 5rem 2rem;
+        }
+
+        .news-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px var(--shadow-hover);
+        }
+
+        .news-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            position: relative;
+            display: flex;
+            overflow: hidden;
+            align-items: flex-start;
+            justify-content: flex-end;
+        }
+
+        .news-image img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .news-category {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--accent-orange);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .news-content {
+            padding: 2rem;
+        }
+
+        .news-date {
+            color: var(--accent-orange);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            line-height: 1.4;
+        }
+
+        .news-card p {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .view-all-news {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #e74c3c, #f39c12);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .view-all-news:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        /* Galeri Sayfası */
+        .gallery-section {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0 3rem;
+            flex-wrap: wrap;
+        }
+
+        .gallery-tab {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #ecf0f1;
+            background: white;
+            border-radius: 25px;
+            font-weight: 600;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-tab:hover,
+        .gallery-tab.active {
+            border-color: var(--accent-orange);
+            background: var(--accent-orange);
+            color: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .gallery-item {
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-image {
+            height: 250px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            position: relative;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .gallery-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 2rem 1.5rem 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-date {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .load-more-gallery {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #e74c3c, #f39c12);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .load-more-gallery:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        /* Iletişim Sayfası */
+        .contact {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            color: white;
+            padding: 3rem;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-info::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-media {
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-media h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .social-icon {
+            font-size: 1.8rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            color: #2c3e50;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .social-icon:hover {
+            transform: scale(1.2);
+            color: white;
+        }
+
+        .social-icon.instagram:hover {
+            background: radial-gradient(circle at 30% 107%, #feda75, #d62976, #962fbf, #4f5bd5);
+        }
+
+        .social-icon.facebook:hover {
+            background: #3b5998;
+        }
+
+        .social-icon.twitter:hover {
+            background: #1da1f2;
+        }
+
+        .social-icon.linkedin:hover {
+            background: #0077B5;
+        }
+
+        .social-icon.youtube:hover {
+            background: #ff0000;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #e74c3c;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(34, 96, 143, 0.389);
+        }
+
+        /* Hakkında Kısımı */
+        .about-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem;
+        }
+
+        /* Içerik Kutusu */
+        .about-container {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            width: 100%;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        /* Sol: Görsel Alan */
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .education-icon {
+            max-width: 100%;
+            width: 300px;
+            height: auto;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Sağ: Metin Alanı */
+        .about-text {
+            flex: 1;
+            text-align: left;
+        }
+
+        .about-text h2 {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            color: #444;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        /* Buton */
+        .btn-cta {
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .btn-cta:hover {
+            background: var(--primary-green);
+        }
+
+        /* Basit Fade-in efekti */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: 0.2s;
+        }
+
+        /* Değerler Bölümü */
+        .values-section {
+            background: bac;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .values-cards {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .value-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            max-width: 300px;
+            flex: 1;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-card h3 {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Bağış Bölümü */
+        /* Modern Banka Havalesi Kartı Stili */
+.donation-card {
+    max-width: 450px;
+    margin: auto;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    transition: transform 0.3s ease;
+}
+.donation-card:hover {
+    transform: translateY(-5px);
+}
+.donation-header {
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+    padding: 2rem 1rem 1.5rem;
+    text-align: center;
+    color: white;
+}
+.donation-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+.donation-body {
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-light);
+}
+.account-info {
+    background: #f9f9f9;
+    border: 1px solid #e1e1e1;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    padding: 1.2rem;
+    font-size: 1.05rem;
+}
+.account-info div {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #eaeaea;
+}
+.account-info div:last-child {
+    border-bottom: none;
+}
+.copy-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+    color: #fff;
+    border: none;
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+.copy-btn:hover {
+    filter: brightness(1.05);
+}
+.copied-msg {
+    display: none;
+    margin-top: 1rem;
+    font-weight: 600;
+    color: var(--primary-green);
+}
+
+
+        /* Bağış Butonu */
+        .donation-btn {
+            background: var(--primary-blue);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(63, 135, 199, 0.3);
+            display: inline-block;
+        }
+
+        .donation-btn:hover {
+            background: var(--primary-green);
+            transform: scale(1.05);
+        }
+
+        /* Istatistik Kutuları */
+        .donation-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: wheat;
+            padding: 1.5rem 1.2rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 5px 20px var(--shadow);
+            width: 140px;
+            transition: 0.3s ease-in-out;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 30px var(--shadow-hover);
+        }
+
+        .stat-box .icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .stat-box strong {
+            font-size: 1.4rem;
+            color: var(--accent-orange);
+            display: block;
+        }
+
+        .stat-box span {
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+
+        /* Arka Plan Geçiş */
+        .section {
+            padding: 5rem 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .gradient-bg-1 {
+            background: white;
+        }
+
+        .gradient-bg-2 {
+            background: #e3f2fd;
+        }
+
+        .gradient-bg-3 {
+            background: white;
+        }
+
+        .svg-transition {
+            height: 120px;
+            overflow: hidden;
+            line-height: 0;
+        }
+
+        .svg-transition svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+        }
+
+        .svg-transition.svg-down {
+            transform: translateY(-1px);
+        }
+
+        .svg-transition.svg-up {
+            margin-top: -1px;
+            transform: rotate(180deg);
+        }
+
+        .svg-transition.svg-down.left {
+            margin-top: -1px;
+            transform: rotate(180deg);
+            transform: rotateX(180deg);
+
+        }
+
+        /* Animasyonlar */
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background: #444444;
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--primary-green);
+            padding-top: 2rem;
+            color: #acacac;
+        }
+
+        /* Uyumlu Tasarım */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero-image {
+                top: 58%;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .about-section {
+                margin: 3rem 1rem;
+            }
+
+            .values-cards {
+                margin: 0 2rem;
+            }
+
+            .about {
+                padding: 3rem 1rem;
+            }
+
+            .dropdown {
+                display: none;
+            }
+
+            .president-card {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .president-photo {
+                width: 250px;
+                height: 300px;
+                margin: 0 auto;
+            }
+
+            .page-content {
+                padding: 100px 1rem 3rem;
+            }
+
+            .content-card {
+                padding: 2rem;
+            }
+
+            .donation-content h2 {
+                font-size: 2rem;
+            }
+
+            .donation-content p {
+                font-size: 1.05rem;
+            }
+
+            .donation-stats {
+                gap: 1.5rem;
+            }
+
+            .about-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .about-text {
+                text-align: center;
+            }
+
+            .about-text h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .amount-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Animasyonlar */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cardSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Kaydırma Animasyonu */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="topbar">
+            <div class="topbar-left" id="topbar-date">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="current-date"></span>
+            </div>
+            <div class="topbar-right" id="loginMenu" style="display: flex;">
+                <a href="#" class="top-btn" id="loginButton" onclick="showPage('giris')">
+                    🔐 Giriş Yap
+                </a>
+                <a href="#" class="top-btn" id="registerButton" onclick="showPage('kayit')">
+                    📝 Üye Ol
+                </a>
+            </div>
+            <span id="userLoggedIn" style="display: none; align-items: center; gap: 10px;">
+                <span id="usernameDisplay" style="font-size: 16px; font-weight:600; color:white;"></span>
+                <a href="#" class="top-btn" id="logoutBtn" onclick="logoutUser()" style="margin-left:10px;">🚪 Çıkış Yap</a>
+            </span>
+        </div>
+
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showHome()">
+                <img src="assets/ImaretYeniLogoKüçükPng.png" alt="İmaret Vakfı">
+            </a>
+            <nav class="nav-menu">
+                <div class="nav-item">
+                    <a href="#" onclick="showPage('baskan')">Başkan</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#kurumsal">Kurumsal <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown">
+                        <a href="#" onclick="showPage('vakif')">Vakıf</a>
+                        <a href="#" onclick="showPage('tarihce')">Tarihçe</a>
+                        <a href="#" onclick="showPage('tuzuk')">Tüzük</a>
+                        <a href="#" onclick="showPage('yonetim-kurulu')">Yönetim Kurulu</a>
+                        <a href="#" onclick="showPage('kurucular-kurulu')">Kurucular Kurulu</a>
+                        <a href="#" onclick="showPage('uyelerimiz')">Üyelerimiz</a>
+                        <a href="#" onclick="showPage('amaclar')">Amaçlar</a>
+                        <a href="#" onclick="showPage('hedefler')">Hedefler</a>
+                        <a href="#" onclick="showPage('duyurular')">Duyurular</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#" onclick="showPage('bagis')">Bağış Yap</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" onclick="showPage('burs')">Burs</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" onclick="showPage('haberler')">Haberler</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" onclick="showPage('galeri')">Galeri</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" onclick="showPage('iletisim')">İletişim</a>
+                </div>
+            </nav>
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <ul class="mobile-nav-menu">
+            <li class="mobile-nav-item">
+                <a href="#" onclick="showPage('baskan')">Başkan</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#kurumsal" class="mobile-dropdown-toggle">Kurumsal <span class="dropdown-arrow">▼</span></a>
+                <div class="mobile-dropdown">
+                    <a href="#" onclick="showPage('vakif')">Vakıf</a>
+                    <a href="#" onclick="showPage('tarihce')">Tarihçe</a>
+                    <a href="#" onclick="showPage('tuzuk')">Tüzük</a>
+                    <a href="#" onclick="showPage('yonetim-kurulu')">Yönetim Kurulu</a>
+                    <a href="#" onclick="showPage('kurucular-kurulu')">Kurucular Kurulu</a>
+                    <a href="#" onclick="showPage('uyelerimiz')">Üyelerimiz</a>
+                    <a href="#" onclick="showPage('amaclar')">Amaçlar</a>
+                    <a href="#" onclick="showPage('hedefler')">Hedefler</a>
+                    <a href="#" onclick="showPage('duyurular')">Duyurular</a>
+                </div>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#" onclick="showPage('bagis')">Bağış Yap</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#" onclick="showPage('burs')">Burs</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#" onclick="showPage('haberler')">Haberler</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#" onclick="showPage('galeri')">Galeri</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#" onclick="showPage('iletisim')">İletişim</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Giriş Sayfası -->
+    <div id="giris" class="page-content">
+        <div class="page-container">
+            <h1 class="page-title">Giriş Yap</h1>
+            <div class="content-card" style="max-width: 500px; margin: 0 auto;">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">📧 E-Posta</label>
+                        <input type="email" id="email" name="email" placeholder="E-posta adresinizi girin" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">🔒 Şifre</label>
+                        <input type="password" id="password" name="password" placeholder="Şifrenizi girin" required />
+                    </div>
+
+                    <div class="checkboxes" style="margin-bottom: 1rem; text-align: left;">
+                        <label><input type="checkbox" onclick="togglePassword()"> Şifreyi Göster</label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Giriş Yap</button>
+
+                    <p style="margin-top: 1.2rem; font-size: 0.95rem; color: var(--text-light);">
+                        Henüz üye değil misiniz?
+                        <a href="#" onclick="showPage('kayit')" style="color: var(--accent-orange); font-weight: 600;">Üye Ol</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kayıt Sayfası -->
+    <div id="kayit" class="page-content">
+        <div class="page-container">
+            <h1 class="page-title">Üye Ol</h1>
+            <div class="content-card" style="max-width: 550px; margin: 0 auto;">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="ad">👤 Ad Soyad</label>
+                        <input type="text" id="ad" name="ad" placeholder="Adınızı ve soyadınızı girin" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">📧 E-Posta</label>
+                        <input type="email" id="email" name="email" placeholder="ornek@eposta.com" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefon">📱 Telefon</label>
+                        <input type="text" id="telefon" name="telefon" placeholder="05XX XXX XX XX" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sifre">🔒 Şifre</label>
+                        <input type="password" id="sifre" name="sifre" placeholder="Şifrenizi oluşturun" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sifre2">🔁 Şifreyi Onaylayın</label>
+                        <input type="password" id="sifre2" name="sifre2" placeholder="Şifrenizi tekrar girin" required />
+                    </div>
+
+                    <div class="checkboxes" style="margin-bottom: 1rem;">
+                        <label><input type="checkbox" required> KVKK metnini okudum, onaylıyorum.</label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Üye Ol</button>
+
+                    <p style="margin-top: 1.2rem; font-size: 0.95rem; color: var(--text-light);">
+                        Zaten üye misiniz? <a href="#" onclick="showPage('giris')" style="color: var(--accent-orange); font-weight: 600;">Giriş Yap</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Kısmı -->
+    <section id="hero" class="hero">
+        <img src="assets/ImaretVakfı.png" alt="AnaSayfa" class="hero-image">
+        <div class="hero-content">
+            <a href="#about" class="cta-button">Daha Fazla Bilgi</a>
+        </div>
+    </section>
+
+    <!-- Hakkında Kısmı -->
+    <section id="about" class="section about-section gradient-bg-1">
+        <div class="about-container">
+            <div class="about-image">
+                <img src="https://cdn-icons-png.flaticon.com/512/906/906175.png" alt="Eğitim İkonu" class="education-icon">
+            </div>
+            <div class="about-text fade-in">
+                <h2>Eğitimle Geleceği İnşa Ediyoruz</h2>
+                <p>
+                    İmaret Vakfı olarak, her bireyin nitelikli eğitime ulaşma hakkı olduğuna inanıyoruz.
+                    Geleceğin liderlerini yetiştirmek, eğitimde fırsat eşitliği sağlamak ve toplumu bilgiyle güçlendirmek için çalışmalarımıza devam ediyoruz.
+                </p>
+                <a href="#" onclick="showPage('burs')" class="btn-cta">📘 Başvur</a>
+            </div>
+        </div>
+
+        <!-- SVG Geçiş -->
+        <div class="svg-transition svg-up">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path d="M0,0 C480,120 960,0 1440,120 L1440,0 L0,0 Z" fill="#e3f2fd"></path>
+            </svg>
+        </div>
+
+        <!-- Değerler Kısmı -->
+        <section class="section values-section gradient-bg-2">
+            <h1 class="page-title">Değerlerimiz</h1>
+            <div class="values-cards">
+                <div class="value-card fade-in">
+                    <div class="card-icon">❤️</div>
+                    <h3>Empati</h3>
+                    <p>İnsanların duygularını anlamak ve onlara değer vermek önceliğimizdir.</p>
+                </div>
+                <div class="value-card fade-in">
+                    <div class="card-icon">⚖️</div>
+                    <h3>Adalet</h3>
+                    <p>Her bireyin eşit haklara sahip olduğu adil bir toplum için çalışıyoruz.</p>
+                </div>
+                <div class="value-card fade-in">
+                    <div class="card-icon">🌿</div>
+                    <h3>Sürdürülebilirlik</h3>
+                    <p>Gelecek nesiller için bugünden sorumluluk alıyoruz.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SVG Geçiş -->
+        <div class="svg-transition svg-down">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path d="M0,0 C480,120 960,0 1440,120 L1440,0 L0,0 Z" fill="#e3f2fd"></path>
+
+            </svg>
+        </div>
+
+        <!-- Bağış Kısmı -->
+        <!-- Etki Göstergesi -->
+        <div class="page-container" style="margin-top: 5rem;">
+            <h2 class="page-title">Bağışlarınızın Etkisi</h2>
+            <div style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; text-align: center;">
+                <div class="content-card" style="flex: 1 1 250px;">
+                <h3 style="font-size: 2rem; color: var(--primary-green);">320+</h3>
+                <p>Öğrenciye eğitim bursu</p>
+                </div>
+                <div class="content-card" style="flex: 1 1 250px;">
+                <h3 style="font-size: 2rem; color: var(--primary-blue);">90%</h3>
+                <p>Mezuniyet oranı</p>
+                </div>
+                <div class="content-card" style="flex: 1 1 250px;">
+                <h3 style="font-size: 2rem; color: var(--accent-orange);">245</h3>
+                <p>Üniversiteye yerleşen öğrenci</p>
+                </div>
+            </div>
+            <div class="content-card">
+                <h2 class="donation-title">🎓 Geleceğe Umut Olun</h2>
+                <p class="donation-text">
+                    Bir çocuğun <strong>hayalleri</strong>, sizin desteğinizle gerçeğe dönüşebilir. Eğitime erişimde fırsat eşitliği sağlamak için birlikte hareket edelim.
+                </p>
+
+                <div class="donation-stats">
+    <div class="stat-box"> 
+        <div class="icon">🤝</div>
+        <strong data-target="2480">0</strong>
+        <span>Bağışçı</span>
+    </div>
+    <div class="stat-box">
+        <div class="icon">👩‍🎓</div>
+        <strong data-target="324">0</strong>
+        <span>Öğrenciye Destek</span>
+    </div>
+    <div class="stat-box">
+        <div class="icon">🔍</div>
+        <strong data-target="100">0</strong>
+        <span>Şeffaflık</span>
+    </div>
+</div>
+
+                    <a href="#" onclick="showPage('bagis')" class="donation-btn">🎁 Şimdi Bağış Yap</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Başkan Sayfası -->
+    <div id="baskan" class="page-content">
+        <div class="page-container">
+            <h1 class="page-title">Başkanımız</h1>
+            <div class="content-card">
+                <div class="president-card">
+                    <div class="president-photo"><img src="assets/HakkıEsen.png" alt="Başkan"></div>
+                    <div class="president-info">
+                        <h3>İsmail Hakkı Esen</h3>
+                        <div class="president-title">İsmail Hakkı Esen (d.1970, Çankırı), 4 Nisan 2019’dan beri Çankırı Belediye Başkanı.</div>
+                        <div class="president-bio">
+                            <h4>Çocukluk ve Gençlik Dönemi</h4>
+                            <p>Yapraklı'nın tanınmış ailelerinden İsmail Hakkı Esen, 1970 yılında ailesinin dördüncü çocuğu olarak Çankırı’da doğdu. İlkokulu Aksu (İlker Tuncay) ilköğretim okulunda, orta öğretimini Merkez (İsmet İnönü) İlköğretim Okulunda, lise eğitimini ise Çankırı Teknik Lisesinde tamamladıktan sonra 1993 yılında yükseköğrenimini 9 Eylül Üniversitesi’nde tamamladı. İyi derecede Almanca biliyor.</p>
+
+                            <h4>Çalışma Yaşamı</h4>
+                            <p>Eğitim öğretim hayatını tamamladıktan sonra hizmet için Çankırı’ya dönen İsmail Hakkı Esen, 35 yıl boyunca aile şirketi olan Hilal Otomotiv San. Tic. Ltd. Şti'nin Yönetim Kurulu Başkanlığı görevini yürüttü. Siyasi faaliyetlerinin yanı sıra ticari hayatındaki başarıları ve sosyal alandaki aktivasyonu ile Çankırı Ticaret ve Sanayi Odasının Yönetim Kurulu Üyeliğine seçildi ve iki dönem Çankırı Ticaret ve Sanayi Odası Yönetim Kurulu Başkan Yardımcılığı görevini yürüttü.</p>
+
+                            <h4>Siyasi Yaşamı</h4>
+                            <p>Lise yıllarında Ülkücü hareket ile tanıştıktan sonra Milliyetçi Hareket Partisi'ne intisap ederek uzun yıllar boyunca partinin yönetim kademelerinde aralıksız olarak siyasi görevlerde yer aldı.
+                            2014 yılında yapılan yerel seçimlerde Milliyetçi Hareket Partisi'nden Belediye Meclis Üyeliği'ne seçildi ve akabinde Milliyetçi Hareket Partisi Belediye Meclisi Grup Başkan Vekilliği görevini üstlendi.
+                            31 Mart 2019 Yerel Seçimlerinde MHP’den Çankırı ili Belediye Başkan adayı oldu ve Çankırı halkının güvenoyunu alarak Çankırı Belediye Başkanlığına seçildi.
+                            Beş yıllık görev sürecinde hemşehrilerinin takdirini toplayarak 31 Mart 2024 Yerel Seçimlerinde %59,80'lik bir oy potansiyeli ile Çankırı Belediye Başkanlığında ikinci dönemine geçiş yaptı.</p>
+
+                            <h4>Aile Yaşamı</h4>
+                            <p>Esen, evli ve 2 çocuk babasıdır.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vakıf Sayfası -->
+    <div id="vakif" class="page-content">
+        <div class="page-container">
+            <h1 class="page-title">Vakfımız Hakkında</h1>
+            <div class="content-card">
+                <div class="corporate-section">
+                    <h3 class="section-title-small">İmaret Vakfı</h3>
+                    <div class="section-content">
+                        <p>Imaret Vafkı Hakkında.</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tarihçe Sayfası -->
+    <div id="tarihce" class="page-content">
+        <div class="page-container">
+            <h1 class="page-title">Tarihçemiz</h1>
+            <div class="content-card">
+                <div class="corporate-section">
+                    <h3 class="section-title-small">Kuruluşumuzdan Bugüne</h3>
+                    <div class="section-content">
+                        <p><strong>2025 - Kuruluş Yılı:</strong> İmaret Vakfı, toplumsal ihtiyaçlara cevap vermek amacıyla bir grup gönüllü tarafından kurulmuştur. İlk kurulum toplantımız 03 Mayıs 2025 tarihinde gerçekleştirilmiştir.</p>
+
+                        <p><strong>Vizyon ve Misyon Belirleme:</strong> Vakfımızın temel değerleri, eğitim, kültür, yardımlaşma ve kalkınma alanlarında topluma hizmet etmek üzere belirlenmiştir.</p>
+
+                        <p><strong>İlk Projelerimiz:</strong> Kuruluşumuzdan itibaren eğitim bursu programları, kültürel etkinlikler ve sosyal yardım kampanyaları düzenlemeye başladık.</p>
+
+                        <p><strong>Gelecek Hedeflerimiz:</strong> Daha geniş kitlelere ulaşarak, toplumsal kalkınmaya katkıda bulunmayı ve sürdürülebilir projeler geliştirmeyi hedefliyoruz.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tüzük Sayfası -->
+    <div id="tuzuk" class="page-content">
+        <div class="page-container">
+            <h1 class="page-title">Vakıf Tüzüğümüz</h1>
+            <div class="content-card">
+                <div class="corporate-section">
+                    <h3 class="section-title-small">Yasal Düzenlemelerimiz</h3>
+                    <div class="section-content">
+                        <p>İmaret Vakfı tüzüğü, 5737 sayılı Vakıflar Kanunu hükümlerine uygun olarak hazırlanmış ve Vakıflar Genel Müdürlüğü tarafından onaylanmıştır.</p>
+
+                        <p><strong>Temel İlkelerimiz:</strong></p>
+                        <ul style="text-align: left; max-width: 600px; margin: 0 auto;">
+                            <li>Kanunlara ve demokratik değerlere saygı</li>
+                            <li>Şeffaflık ve hesap verebilirlik</li>
+                            <li>Katılımcı yönetim anlayışı</li>
+                            <li>Toplumsal fayda odaklı çalışma</li>
+                            <li>İnsan haklarına saygı</li>
+                        </ul>
+
+                        <p>Tüzüğümüzün tam metnine vakfımız merkezinden veya web sitemizden ulaşabilirsiniz.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Yönetim Kurulu Sayfası -->
+    <div id="yonetim-kurulu" class="page-content">
+        <div class="page-container">
+            <h1 class="page-title">Yönetim Kurulumuz</h1>
+            <div class="content-card">
+                <div class="corporate-section">
+                    <h3 class="section-title-small">Yönetim Kadromuz</h3>
+                    <div class="section-content">
+                        <p>Vakfımızın yönetimi, deneyimli ve alanında uzman yönetim kurulu üyeleri tarafından gerçekleştirilmektedir.</p>
+
+                        <p><strong>Yönetim Kurulu Üyelerimiz:</strong></p>
+                        <ul style="text-align: left; max-width: 600px; margin: 2rem auto;">
+                            <li><strong>Başkan:</strong> İsmail Hakkı Esen - Belediye Başkanı</li>
+                            <li><strong>Başkan Yardımcısı:</strong> [İsim] - Sosyal Hizmet Uzmanı</li>
+                            <li><strong>Sekreter:</strong> [İsim] - İdari İşler Uzmanı</li>
+                            <li><strong>Sayman:</strong> [İsim] - Mali İşler Uzmanı</li>
+                            <li><strong>Üye:</strong> [İsim] - Kültür ve Sanat Uzmanı</li>
+                            <li><strong>Üye:</strong> [İsim] - Proje Geliştirme Uzmanı</li>
+                            <li><strong>Üye:</strong> [İsim] - Halkla İlişkiler Uzmanı</li>
+                        </ul>
+
+                        <p>Yönetim kurulumuz, vakfın stratejik kararlarını alır ve faaliyetlerin etkin bir şekilde yürütülmesini sağlar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kurucular Kurulu Sayfası -->
+    <div id="kurucular-kurulu" class="page-content">
+        <div class="page-container">
+            <h1 class="page-title">Kurucular Kurulumuz</h1>
+            <div class="content-card">
+                <div class="corporate-section">
+                    <h3 class="section-title-small">Vakfımızın Kurucuları</h3>
+                    <div class="section-content">
+                        <p>İmaret Vakfı, toplumsal ihtiyaçları gören ve çözüm üretme konusunda kararlı olan bir grup gönüllü tarafından kurulmuştur.</p>
+
+                        <p><strong>Kurucu Üyelerimiz:</strong></p>
+                        <ul style="text-align: left; max-width: 600px; margin: 2rem auto;">
+                            <li>[Kurucu Üye 1] - Eğitim Alanı Temsilcisi</li>
+                            <li>[Kurucu Üye 2] - Sosyal Sorumluluk Uzmanı</li>
+                            <li>[Kurucu Üye 3] - Kültür ve Sanat Temsilcisi</li>
+                            <li>[Kurucu Üye 4] - İş Dünyası Temsilcisi</li>
+                            <li>[Kurucu Üye 5] - Sivil Toplum Temsilcisi</li>
+                        </ul>
+
+                        <p>Kurucularımız, vakfımızın temel değerlerini belirlemiş ve bugünkü konumumuza gelmemizde öncü rol oynamışlardır.</p>
+
+                        <p>Her biri kendi alanında uzman olan kurucularımız, vakfımızın vizyoner yaklaşımını şekillendirmişler ve sürdürülebilir bir yapı oluşturmuşlardır.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Üyelerimiz Sayfası -->
+    <div id="uyelerimiz" class="page-content">
+        <div class="page-container">
+            <h1 class="page-title">Üyelerimiz</h1>
+            <div class="content-card">
+                <div class="corporate-section">
+                    <h3 class="section-title-small">Vakıf Ailemiz</h3>
+                    <div class="section-content">
+                        <p>İmaret Vakfı, geniş bir üye ağına sahiptir. Üyelerimiz farklı meslek gruplarından ve yaşam alanlarından gelmektedir.</p>
+
+                        <p><strong>Üyelik Kategorilerimiz:</strong></p>
+                        <ul style="text-align: left; max-width: 600px; margin: 2rem auto;">
+                            <li><strong>Kurucu Üyeler:</strong> Vakfın kuruluşunda yer alan üyeler</li>
+                            <li><strong>Asil Üyeler:</strong> Düzenli olarak faaliyetlere katılan üyeler</li>
+                            <li><strong>Fahri Üyeler:</strong> Vakfa özel katkıları olan değerli üyeler</li>
+                            <li><strong>Gönüllü Üyeler:</strong> Proje bazında destek sağlayan üyeler</li>
+                        </ul>
+
+                        <p><strong>Üye Olmak İçin:</strong> Vakfımızın amaç ve ilkelerini benimseyen, 18 yaşını doldurmuş her Türkiye Cumhuriyeti vatandaşı üye olabilir.</p>
+
+                        <p>Üyelik başvuruları için vakıf merkezimize başvurabilir veya iletişim bilgilerimizden bize ulaşabilirsiniz.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Amaçlar Sayfası -->
+    <div id="amaclar" class="page-content">
+        <div class="page-container">
+            <h1 class="page-title">Amaçlarımız</h1>
+            <div class="content-card">
+                <div class="corporate-section">
+                    <h3 class="section-title-small">Temel Amaçlarımız</h3>
+                    <div class="section-content">
+                        <p>İmaret Vakfı, toplumsal kalkınma ve sosyal adalet ilkeleri doğrultusunda belirlediği amaçları gerçekleştirmek için çalışmaktadır.</p>
+
+                        <ul class="objectives-list">
+                            <li>Eğitim alanında fırsat eşitliğini sağlamak ve kaliteli eğitime erişimi kolaylaştırmak</li>
+                            <li>Kültürel mirasımızı korumak, geliştirmek ve gelecek nesillere aktarmak</li>
+                            <li>İhtiyaç sahibi bireylere ve ailelere sosyal destek sağlamak</li>
+                            <li>Toplumsal dayanışmayı güçlendirmek ve karşılıklı yardımlaşmayı teşvik etmek</li>
+                            <li>Gençlerin sosyal ve kültürel gelişimlerine katkıda bulunmak</li>
+                            <li>Bölgesel kalkınma projelerine destek vermek</li>
+                            <li>Çevre bilincini artırmak ve sürdürülebilir yaşam tarzlarını teşvik etmek</li>
+                            <li>Kadın ve çocuk haklarını korumak ve güçlendirmek</li>
+                            <li>Yaşlıların toplumsal yaşama katılımını desteklemek</li>
+                            <li>Sivil toplum bilincini artırmak ve demokratik katılımı teşvik etmek</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hedefler Sayfası -->
+    <div id="hedefler" class="page-content">
+        <div class="page-container">
+            <h1 class="page-title">Hedeflerimiz</h1>
+            <div class="content-card">
+                <div class="corporate-section">
+                    <h3 class="section-title-small">Stratejik Hedeflerimiz</h3>
+                    <div class="section-content">
+                        <p>Vakfımız, belirlenen amaçları doğrultusunda kısa, orta ve uzun vadeli hedefler belirlemiştir.</p>
+
+                        <ul class="goals-list">
+                            <li><strong>2025-2026 Hedefleri:</strong> 100 öğrenciye eğitim bursu sağlamak ve 5 kültürel etkinlik düzenlemek</li>
+                            <li><strong>Eğitim Merkezleri:</strong> Çankırı ve çevre illerde eğitim destek merkezleri açmak</li>
+                            <li><strong>Dijital Platform:</strong> Online eğitim ve kültür platformu geliştirmek</li>
+                            <li><strong>Ortaklık Ağı:</strong> Ulusal ve uluslararası kuruluşlarla işbirlikleri geliştirmek</li>
+                            <li><strong>Sosyal Girişimcilik:</strong> Sürdürülebilir gelir kaynaları oluşturmak</li>
+                            <li><strong>Araştırma ve Geliştirme:</strong> Toplumsal ihtiyaçları analiz eden araştırmalar yapmak</li>
+                            <li><strong>Gönüllü Ağı:</strong> 500 aktif gönüllüye ulaşmak</li>
+                            <li><strong>Proje Fonları:</strong> Ulusal ve AB fonlarından proje desteği almak</li>
+                            <li><strong>Kurumsal Kimlik:</strong> Markalı ve tanınan bir vakıf kimliği oluşturmak</li>
+                            <li><strong>Sürdürülebilirlik:</strong> Çevre dostu ve sürdürülebilir projeler geliştirmek</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Duyurular Sayfası -->
+    <div id="duyurular" class="page-content">
+        <div class="page-container">
+            <h1 class="page-title">Duyurular</h1>
+            <div class="content-card">
+                <div class="corporate-section">
+                    <h3 class="section-title-small">Güncel Duyurularımız</h3>
+                    <div class="section-content">
+                        <div style="background: var(--background-light); padding: 2rem; border-radius: 15px; margin: 2rem 0; border-left: 4px solid var(--accent-orange);">
+                            <h4 style="color: var(--accent-orange); margin-bottom: 1rem;">🎓 Eğitim Bursu Başvuruları Başladı</h4>
+                            <p style="margin-bottom: 1rem;"><strong>Tarih:</strong> 15 Temmuz 2025</p>
+                            <p>2025-2026 eğitim öğretim yılı için burs başvuruları 1 Ağustos tarihinde başlayacaktır. Başarılı öğrencilerimiz için hazırladığımız kapsamlı burs programına başvuru yapabilirsiniz.</p>
+                        </div>
+
+                        <div style="background: var(--background-light); padding: 2rem; border-radius: 15px; margin: 2rem 0; border-left: 4px solid var(--primary-green);">
+                            <h4 style="color: var(--primary-green); margin-bottom: 1rem;">🎨 Kültür Festivali Duyurusu</h4>
+                            <p style="margin-bottom: 1rem;"><strong>Tarih:</strong> 10 Temmuz 2025</p>
+                            <p>Geleneksel El Sanatları Festivali 25-27 Ağustos tarihleri arasında Çankırı Kale çevresinde düzenlenecektir. Tüm vatandaşlarımız davetlidir.</p>
+                        </div>
+
+                        <div style="background: var(--background-light); padding: 2rem; border-radius: 15px; margin: 2rem 0; border-left: 4px solid var(--primary-blue);">
+                            <h4 style="color: var(--primary-blue); margin-bottom: 1rem;">🤝 Gönüllü Alımı</h4>
+                            <p style="margin-bottom: 1rem;"><strong>Tarih:</strong> 5 Temmuz 2025</p>
+                            <p>Vakfımızın projelerinde yer almak isteyen gönüllülerimizi bekliyoruz. Eğitim, kültür ve sosyal yardım alanlarında aktif rol almak isteyenler başvurabilir.</p>
+                        </div>
+
+                        <p style="margin-top: 3rem; font-style: italic; color: var(--text-light);">Güncel duyurularımızı takip etmek için sosyal medya hesaplarımızı takip edebilir veya e-bültenimize abone olabilirsiniz.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bağış Sayfası -->
+    <div id="bagis" class="page-content">
+        <div class="page-container">
+            <h1 class="page-title">Bağış Yaparak Destek Olun</h1>
+            <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem; color: var(--text-light);">
+                Vakfımızın faaliyetlerine destek olmak için güvenli ve kolayca bağış yapabilirsiniz.
+            </p>
+
+            <!-- Modern Banka Havalesi Kartı -->
+<div class="donation-card">
+    <div class="donation-header">
+        <h2><i class="fas fa-university"></i> Banka Havalesi</h2>
+    </div>
+    <div class="donation-body">
+        <p>Vakfımıza banka havalesi yoluyla bağış yapmak için aşağıdaki hesap bilgilerini kullanabilirsiniz:</p>
+
+        <div class="account-info">
+            <div><strong>Banka:</strong><span>VakıfBank</span></div>
+            <div><strong>IBAN:</strong><span id="ibanText">TR23 0001 5001 5800 7319 1829 31</span></div>
+        </div>
+
+        <button id="copyIbanBtn" class="copy-btn">
+            <i class="fas fa-copy"></i> IBAN'ı Kopyala
+        </button>
+        <div id="ibanCopiedMsg" class="copied-msg">
+            <i class="fas fa-check-circle"></i> IBAN kopyalandı!
+        </div>
+    </div>
+</div>
+
+        </div>
+    </div>
+    
+    <!-- Burs Başvurusu Sayfası -->
+    <div id="burs" class="page-content">
+        <div class="page-container">
+            <h1 class="page-title">Burs Başvuru Formu</h1>
+
+            <!-- Bilgilendirme -->
+            <div class="content-card">
+                <h3>Program Hakkında</h3>
+                <p>Bu burs, ihtiyaç sahibi ve başarılı öğrencilerin eğitimlerini desteklemek amacıyla verilmektedir.</p>
+            </div>
+
+            <!-- Başvuru Formu -->
+            <form id="bursForm" class="content-card" enctype="multipart/form-data">
+                <h3>📝 Başvuru Formu</h3>
+
+                <!-- Belgeler -->
+                <fieldset>
+                    <legend>📥 Başvuruya Ait Belgeler</legend>
+                    <div class="file-group">
+                        <label>Burs Başvuru Koşul Formu:
+                            <a href="assets/Başvuru_Koşulu.docx" target="_blank">Formu İndir</a>
+                        </label>
+                    </div>
+
+                    <div class="file-group">
+                        <label>Müracaat Formu:
+                            <a href="assets/Müracat_Formu.doc" target="_blank">Formu İndir</a>
+                        </label>
+                        <h4>Dolduruğunuz Müracat Formunu Ekleyiniz.</h4>
+                        <input type="file" name="muracaatFormu" accept=".pdf" required>
+                    </div>
+                </fieldset>
+
+                <!-- Belge Yükleme -->
+                <fieldset>
+                    <legend>📎 Zorunlu Belgeler</legend>
+                    <div class="file-grid">
+                        <div class="file-group"><label>Kimlik Fotokopisi:</label><input type="file" name="kimlik" accept=".pdf,.jpg,.jpeg,.png" required></div>
+                        <div class="file-group"><label>Gelir Belgesi:</label><input type="file" name="gelir" accept=".pdf,.jpg,.jpeg,.png" required></div>
+                        <div class="file-group"><label>Not Dökümü (Transkript):</label><input type="file" name="notdokum" accept=".pdf,.jpg,.jpeg,.png" required></div>
+                        <div class="file-group"><label>Aktif Öğrenci Belgesi:</label><input type="file" name="ogrenciBelge" accept=".pdf,.jpg,.jpeg,.png" required></div>
+                        <div class="file-group"><label>Adli Sicil Kaydı:</label><input type="file" name="adliSicil" accept=".pdf,.jpg,.jpeg,.png" required></div>
+                        <div class="file-group"><label>Vukuatlı Nüfus Kayıt Örneği:</label><input type="file" name="nufusKaydi" accept=".pdf,.jpg,.jpeg,.png" required></div>
+                    </div>
+                </fieldset>
+
+                <!-- Referans Alanı -->
+                <fieldset>
+                    <legend>👥 Referans Bilgileri</legend>
+                    <input type="text" name="referans1" placeholder="1. Referans Adı ve İletişimi" required>
+                    <input type="text" name="referans2" placeholder="2. Referans Adı ve İletişimi" required>
+                </fieldset>
+
+                <!-- Onay Kutuları -->
+                <div class="checkboxes">
+                    <label><input type="checkbox" required> KVKK metnini okudum, onaylıyorum.</label>
+                    <label><input type="checkbox" required> Verdiğim bilgilerin doğruluğunu beyan ederim.</label>
+                </div>
+
+                <!-- Butonlar -->
+                <div class="btn-group">
+                    <button type="submit" class="donate-btn">📨 Başvuruyu Gönder</button>
+                    <button type="reset" class="donate-btn reset">🧹 Formu Temizle</button>
+                </div>
+
+                <div id="formSuccess" style="display:none; color: green;">✅ Başvurunuz başarıyla gönderildi.</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Haberler Sayfası -->
+    <div id="haberler" class="page-content">
+        <div class="page-container">
+            <h1 class="page-title">Haberler</h1>
+            <div class="content-card">
+                <div class="news-grid">
+                    <!-- Örnek haber kartı -->
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="assets/Haber.jpeg" alt="">
+                            <div class="news-category">Etkinlik</div>
+                        </div>
+                        <div class="news-content">
+                            <div class="news-date">18 Temmuz 2025</div>
+                            <h3>Bağışçılarımız İle Kaynaştırma Yemeği Düzenlendi</h3>
+                            <p>Yardımda bulunanlara teşekkür plaketleri verildi...</p>
+                            <a class="read-more" href="#">Devamını Oku</a>
+                        </div>
+                    </div>
+                    <!-- Örnek haber kartı -->
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="assets/Burs.jpg" alt="">
+                            <div class="news-category">Duyuru</div>
+                        </div>
+                        <div class="news-content">
+                            <div class="news-date">18 Temmuz 2025</div>
+                            <h3>Burs Başvuruları Başladı</h3>
+                            <p>Öğrenciler için burs yardım başvurularımız başladı...</p>
+                            <a class="read-more" href="#">Devamını Oku</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Galeri Sayfası-->
+    <div id="galeri" class="page-content">
+        <div class="page-container">
+            <h1 class="page-title">Galeri</h1>
+            <div class="content-card">
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="assets/Galeri.jpeg" alt="">
+                        </div>
+                        <div class="gallery-overlay">
+                            <div class="gallery-title">Bağış Yemeği</div>
+                            <div class="gallery-date">24 Temmuz 2025</div>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <div class="gallery-image">
+                            <img src="assets/Burs.jpg" alt="">
+                        </div>
+                        <div class="gallery-overlay">
+                            <div class="gallery-title">Burslar Başladı</div>
+                            <div class="gallery-date">24 Temmuz 2025</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Iletişim Sayfası-->
+    <div id="iletisim" class="page-content">
+        <div class="page-container">
+            <h1 class="page-title">İletişim</h1>
+            <div class="content-card">
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3>İletişim Bilgileri</h3>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <span>Cumhuriyet Mahallesi, Bulvar Cad,No:15, Çankırı Belediyesi Kat 2 Merkez/Çankırı</span>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                            <span>0533 343 53 18</span>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                            <span>info@imaretvakfi.org</span>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <form>
+                            <div class="form-group">
+                                <label>Ad Soyad</label>
+                                <input type="text" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Mesajınız</label>
+                                <textarea rows="5" required style="resize: vertical; min-height: 100px; max-height: 300px;"></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn">Gönder</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sosyal Medya Bölümü -->
+            <div class="social-media fade-in" style="margin-top: 40px;">
+                <h3>Bizi Takip Edin</h3>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/imaretvakfi" target="_blank" class="social-icon instagram" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/imaretvakfi" target="_blank" class="social-icon facebook" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://twitter.com/imaretvakfi" target="_blank" class="social-icon twitter" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://tr.linkedin.com/" target="_blank" class="social-icon linkedin" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://youtube.com/" target="_blank" class="social-icon youtube" aria-label="Youtube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#" onclick="showPage('baskan')">Başkan</a>
+                <a href="#" onclick="showPage('vakif')">Kurumsal</a>
+                <a href="#" onclick="showPage('bagis')">Bağış Yap</a>
+                <a href="#" onclick="showPage('burs')">Burs</a>
+                <a href="#" onclick="showPage('haberler')">Haberler</a>
+                <a href="#" onclick="showPage('galeri')">Galeri</a>
+                <a href="#" onclick="showPage('iletisim')">İletişim</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 İmaret Vakfı. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sayfa Yönlendirmesi
+        function showPage(pageId) {
+            // Tüm Sayfa içeriklerini gizle
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById('hero').style.display = 'none';
+            document.getElementById('about').style.display = 'none';
+
+            // Show selected page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            closeMobileMenu();
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Erişim koruması: burs sayfası sadece giriş yaptıysa
+            if (pageId === "burs" && localStorage.getItem("loggedIn") !== "true") {
+                alert("🔒 Bu sayfayı görüntülemek için giriş yapmalısınız.");
+                showPage("giris");
+                return;
+            }
+
+            const pages = document.querySelectorAll(".page-content");
+            pages.forEach(p => p.classList.remove("active"));
+
+            const page = document.getElementById(pageId);
+            if (page) page.classList.add("active");
+
+            window.scrollTo(0, 0);
+        }
+
+        function showHome() {
+            // Tüm Sayfa içeriklerini gizle
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Hero Kısımlarını Göster
+            document.getElementById('hero').style.display = 'flex';
+            document.getElementById('about').style.display = 'block';
+
+            closeMobileMenu();
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeMobileMenu() {
+            const mobileNav = document.querySelector('.mobile-nav');
+            const mobileMenu = document.querySelector('.mobile-menu');
+
+            mobileNav.classList.remove('active');
+            mobileMenu.classList.remove('active');
+
+            const spans = mobileMenu.querySelectorAll('span');
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
+        }
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('onclick')) return; // Skip if has onclick
+
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+
+            if (window.scrollY === 0) {
+                // Sayfa en üstte ise topbar görünür, navbar büyür
+                header.classList.add('topbar-visible');
+            } else {
+                // Scroll yapıldıysa topbar gizlenir, navbar normal olur
+                header.classList.remove('topbar-visible');
+            }
+        });
+
+        // Sayfa Açıldığında Topbar Açılır
+        window.addEventListener("load", function () {
+            document.querySelector(".header").classList.add("topbar-visible");
+        });
+
+        // Türkçe gün ve ay isimleri
+        const aylar = [
+            "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+            "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+        ];
+
+        const gunler = [
+            "Pazar", "Pazartesi", "Salı", "Çarşamba",
+            "Perşembe", "Cuma", "Cumartesi"
+        ];
+
+        function formatTarihTR(tarih) {
+            const gun = tarih.getDate();
+            const ay = aylar[tarih.getMonth()];
+            const yil = tarih.getFullYear();
+            const haftaGunu = gunler[tarih.getDay()];
+            return `${gun} ${ay} ${yil} ${haftaGunu}`;
+        }
+
+        // Sayfa yüklendiğinde tarihi yaz
+        document.addEventListener("DOMContentLoaded", () => {
+            const now = new Date();
+            const tarihMetni = formatTarihTR(now);
+            document.querySelector(".current-date").textContent = tarihMetni;
+        });
+
+        // Oturum kontrolü ve isim güncelleme
+        function updateTopbar() {
+            const username = localStorage.getItem("username");
+            const loggedIn = localStorage.getItem("loggedIn") === "true";
+
+            const loginMenu = document.getElementById("loginMenu");
+            const userLoggedIn = document.getElementById("userLoggedIn");
+            const usernameDisplay = document.getElementById("usernameDisplay");
+
+            if (loggedIn && username) {
+                loginMenu.style.display = "none";
+                userLoggedIn.style.display = "flex";
+                usernameDisplay.innerText = "👤 " + username;
+            } else {
+                loginMenu.style.display = "flex";
+                userLoggedIn.style.display = "none";
+                usernameDisplay.innerText = "";
+            }
+        }
+
+        //Şifre Kontrol
+        document.getElementById("registerForm").addEventListener("submit", function (e) {
+            const pw1 = document.getElementById("sifre").value;
+            const pw2 = document.getElementById("sifre2").value;
+
+            if (pw1 !== pw2) {
+                e.preventDefault();
+                alert("Şifreler eşleşmiyor!");
+            }
+        });
+
+        // Kullanıcı Giriş ve Karşılama
+        document.getElementById("loginForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            // DEMO amaçlı: sadece boş geçilmesin
+            if (email && password) {
+                const username = email.split("@")[0]; // örnek: metehan@gmail.com → metehan
+
+                localStorage.setItem("loggedIn", "true");
+                localStorage.setItem("username", username);
+
+                alert("✅ Giriş başarılı! Hoş geldin " + username);
+                showPage('vakif');
+                updateTopbar();
+            } else {
+                alert("❌ Geçerli e-posta ve şifre giriniz.");
+            }
+        });
+
+        function logoutUser() {
+            localStorage.removeItem("loggedIn");
+            localStorage.removeItem("username");
+            updateTopbar();
+            alert("🚪 Oturum kapatıldı.");
+            showPage('giris');
+        }
+        window.addEventListener("load", updateTopbar);
+
+        // Oturumu kapat
+        function logoutUser() {
+            localStorage.removeItem("loggedIn");
+            localStorage.removeItem("username");
+            updateTopbar();
+            alert("🚪 Oturum kapatıldı.");
+            showPage('giris');
+        }
+
+        window.addEventListener("load", updateTopbar);
+
+        // Scroll Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileNav = document.querySelector('.mobile-nav');
+
+        mobileMenu.addEventListener('click', function() {
+            mobileNav.classList.toggle('active');
+            this.classList.toggle('active');
+
+            // Animate hamburger menu
+            const spans = this.querySelectorAll('span');
+            if (this.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        // Mobil Menüyü Kapatma
+        const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+        mobileDropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = this.nextElementSibling;
+                const arrow = this.querySelector('.dropdown-arrow');
+
+                dropdown.classList.toggle('active');
+                this.classList.toggle('active');
+
+                if (dropdown.classList.contains('active')) {
+                    arrow.style.transform = 'rotate(180deg)';
+                } else {
+                    arrow.style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+
+        // Linke Tıklayınca mobil menüyü kapat
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav a:not(.mobile-dropdown-toggle)');
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                closeMobileMenu();
+            });
+        });
+
+        // Bağış İstatistikleri
+document.addEventListener("DOMContentLoaded", () => {
+    const counters = document.querySelectorAll(".donation-stats strong");
+
+    const formatNumber = (num) => {
+        return num.toLocaleString("tr-TR");
+    };
+
+    const animateCounter = (counter) => {
+        const target = +counter.getAttribute("data-target");
+        let current = 0;
+        const increment = Math.ceil(target / 100);
+
+        const update = () => {
+            if (current < target) {
+                current += increment;
+                if (current > target) current = target;
+                counter.innerText = formatNumber(current);
+                requestAnimationFrame(update);
+            } else {
+                counter.innerText = formatNumber(target);
+            }
+        };
+
+        update();
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                animateCounter(counter);
+                observer.unobserve(counter); // Tek seferlik animasyon
+            }
+        });
+    }, {
+        threshold: 0.6 // %60 görünürse başlasın
+    });
+
+    counters.forEach(counter => {
+        observer.observe(counter);
+    });
+});
+
+
+        // IBAN kopyalama
+        const copyIbanBtn = document.getElementById('copyIbanBtn');
+        const ibanCopiedMsg = document.getElementById('ibanCopiedMsg');
+        if (copyIbanBtn) {
+            copyIbanBtn.addEventListener('click', function() {
+                const iban = document.getElementById('ibanText').textContent.trim();
+                navigator.clipboard.writeText(iban).then(() => {
+                    ibanCopiedMsg.style.display = 'block';
+                    copyIbanBtn.style.background = 'var(--primary-green)';
+                    setTimeout(() => {
+                        ibanCopiedMsg.style.display = 'none';
+                        copyIbanBtn.style.background = 'linear-gradient(135deg, var(--primary-blue), var(--primary-green))';
+                    }, 1800);
+                });
+            });
+        }
+
+        // Burs
+        document.getElementById('bursForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const form = e.target;
+
+        if (!form.checkValidity()) {
+            alert("Lütfen tüm gerekli alanları doldurunuz.");
+            return;
+        }
+
+        document.getElementById("formSuccess").style.display = "block";
+        setTimeout(() => {
+            form.reset();
+            document.getElementById("formSuccess").style.display = "none";
+        }, 3000);
+        });
+
+        // Arama Butonu Çalışma
+        const callBtn = document.querySelector('.call-btn');
+        if (callBtn) {
+            callBtn.addEventListener('click', function() {
+                window.location.href = 'tel:+905333435318';
+            });
+        }
+
+        // Başlangıç
+        document.addEventListener('DOMContentLoaded', function() {
+            showHome();
+            updateTopbar();
+        });
+
+        //Sağ Tık Engelleme
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        //Klavye Kısa Yolları Engelleme
+        // document.addEventListener('keydown', function(e) {
+        //     if (e.ctrlKey && ['u', 'c', 's', 'p', 'a'].includes(e.key.toLowerCase())) {
+        //         e.preventDefault();
+        //     }
+        // });
+    </script>
+</body>
+</html>
